@@ -221,6 +221,7 @@ The table below describes all the options.
 |glue_version	|The version of AWS Glue for this session to use. Currently, the only valid options are 2.0 and 3.0. The default value is 2.0.	|no|
 |security_configuration	|The security configuration to use with this session.	|no|
 |connections	|A comma-separated list of connections to use in the session.	|no|
+|sync_tool_classes | Override sync tool class to enable sync with glue catalog for hudi tables | no |
 
 ## Configs
 
@@ -235,6 +236,7 @@ When materializing a model as `table`, you may include several optional configs 
 | clustered_by  | Each partition in the created table will be split into a fixed number of buckets by the specified columns. | Optional               | `country_code`              |
 | buckets  | The number of buckets to create while clustering | Required if `clustered_by` is specified                | `8`              |
 | custom_location  | By default, the adapter will store your data in the following path: `location path`/`database`/`table`. If you don't want to follow that default behaviour, you can use this parameter to set your own custom location on S3 | No | `s3://mycustombucket/mycustompath`              |
+| hudi_options | Dictionary of hudi specifc options: Ex. ``'hoodie.datasource.write.table.type':'MERGE_ON_READ'`` | No | ``hudi_options={'hoodie.datasource.write.table.type':'MERGE_ON_READ','hoodie.datasource.write.precombine.field': 'eventtime'}`` |
 
 ## Incremental models
 
