@@ -152,6 +152,7 @@ class GlueAdapter(SQLAdapter):
         except Exception as e:
             logger.error(e)
             logger.error("rename_relation exception")
+            raise e
 
     def get_relation(self, database, schema, identifier):
         session, client, cursor = self.get_connection()
@@ -192,6 +193,7 @@ class GlueAdapter(SQLAdapter):
             raise DatabaseException(msg="GlueGetColumnsInRelationFailed") from e
         except Exception as e:
             logger.error(e)
+            raise e
 
         # strip hudi metadata columns.
         columns = [x for x in columns
@@ -211,6 +213,7 @@ class GlueAdapter(SQLAdapter):
             raise DatabaseException(msg="GlueDuplicateViewFailed") from e
         except Exception as e:
             logger.error(e)
+            raise e
         target_query = create_view_statement.replace(from_relation.schema, to_relation.schema)
         target_query = target_query.replace(from_relation.identifier, to_relation.identifier)
         return target_query
@@ -406,6 +409,7 @@ SqlWrapper2.execute("""select * from {model["schema"]}.{model["name"]} limit 1""
             raise DatabaseException(msg="GlueCreateCsvFailed") from e
         except Exception as e:
             logger.error(e)
+            raise e
 
 
     @available
